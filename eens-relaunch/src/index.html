@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>EENS ONE | Deutschrap-Label: EENS, Nado &amp; Lara</title>
 <meta name="description" content="EENS ONE ist ein unabhängiges Deutschrap-Label mit EENS, Nado und Lara. Neue Rap-Releases auf Spotify, cineastische Visuals und die EENS ONE Collection im offiziellen Shop.">
-<meta name="theme-color" content="#08090a">
+<meta name="theme-color" content="#060708">
 <meta name="color-scheme" content="dark">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://eensmusic.com/">
@@ -28,6 +28,9 @@
 </head>
 <body>
 <a class="skip" href="#main">Zum Inhalt springen</a>
+<div class="aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+<div class="cursor-glow" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
 
 <header class="topbar" id="topbar">
   <a class="topbar-logo" href="#top" aria-label="EENS ONE – zum Seitenanfang">
@@ -35,10 +38,11 @@
   </a>
   <nav class="topnav" aria-label="Hauptnavigation">
     <a href="#musik">Musik</a>
+    <a href="#visuals">Visuals</a>
     <a href="#artists">Artists</a>
     <a href="#shop">Shop</a>
   </nav>
-  <a class="pill pill-spotify" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener" data-track="spotify-header">
+  <a class="pill magnetic" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-spotify"/></svg><span>Spotify</span>
   </a>
 </header>
@@ -46,31 +50,28 @@
 <main id="main">
 
 <section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="hero-media" data-parallax="0.18">
+  <div class="hero-media">
     <picture>
       <source media="(min-width: 900px)" srcset="/media/hero-poster.webp" width="1280" height="720">
-      <img class="hero-poster" src="/media/hero-poster-mobile.webp" width="512" height="804" alt="EENS-Flagge über einer Yacht, maskierte Crew im Gegenlicht – Szene aus dem Visual La Familia" fetchpriority="high" decoding="async">
+      <img class="hero-poster" src="/media/hero-poster-mobile.webp" width="512" height="804" alt="EENS-Flagge über einer Yacht im Sonnenuntergang, maskierte Crew – Szene aus dem Visual La Familia" fetchpriority="high" decoding="async">
     </picture>
-    <!-- Video wird per JS nur auf Desktop und ohne „Bewegung reduzieren“ geladen -->
-    <div class="hero-video-slot" data-video-slot
-         data-webm="/media/hero-lafamilia.webm" data-mp4="/media/hero-lafamilia.mp4"></div>
+    <div class="hero-video-slot" data-video-slot data-hero data-webm="/media/hero-lafamilia.webm" data-mp4="/media/hero-lafamilia.mp4"></div>
   </div>
   <div class="hero-shade" aria-hidden="true"></div>
+  <div class="hero-spot" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
 
   <div class="hero-inner">
-    <img class="hero-logo" src="/media/logo-1200.webp" width="1200" height="714" alt="EENS – silberner Schriftzug über drei Balken">
-    <p class="eyebrow">EENS ONE · Unabhängiges Deutschrap-Label</p>
-    <h1 id="hero-title" class="hero-title">Die Nacht hat<br><em>eine Handschrift.</em></h1>
+    <div class="hero-logo-wrap"><img class="hero-logo" src="/media/logo-1200.webp" width="1200" height="714" alt="EENS – silberner Schriftzug über drei Balken"><span class="logo-shine" aria-hidden="true"></span></div>
+    <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span>EENS ONE · Unabhängiges Deutschrap-Label</p>
+    <h1 id="hero-title" class="hero-title" data-split>Die Nacht hat<br><em class="chrome">eine Handschrift.</em></h1>
     <p class="hero-sub">Kalte Eleganz. Kontrollierter Druck. Willkommen in der Welt von EENS ONE.</p>
     <div class="hero-ctas">
-      <a class="btn btn-silver" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener" data-track="spotify-hero">
+      <a class="btn btn-silver magnetic" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-spotify"/></svg>
         Auf Spotify hören
       </a>
-      <a class="btn btn-ghost" href="__SHOP__" target="_blank" rel="noopener" data-track="shop-hero">
-        Zum Shop <span aria-hidden="true">↗</span>
-      </a>
+      <a class="btn btn-ghost magnetic" href="__SHOP__" target="_blank" rel="noopener">Zum Shop <span aria-hidden="true">↗</span></a>
     </div>
   </div>
 
@@ -80,26 +81,28 @@
   </div>
 </section>
 
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span>EENS ONE</span><i>—</i><span>Musik mit Haltung</span><i>—</i><span>Zwischen Glanz und Dunkelheit</span><i>—</i><span>EENS · Nado · Lara</span><i>—</i>
-    <span>EENS ONE</span><i>—</i><span>Musik mit Haltung</span><i>—</i><span>Zwischen Glanz und Dunkelheit</span><i>—</i><span>EENS · Nado · Lara</span><i>—</i>
-  </div>
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-row" data-marquee="1"><span>La Familia</span><b>✦</b><span class="o">All In</span><b>✦</b><span>Trade It All</span><b>✦</b><span class="o">Immer Leiser</span><b>✦</b><span>La Familia</span><b>✦</b><span class="o">All In</span><b>✦</b><span>Trade It All</span><b>✦</b><span class="o">Immer Leiser</span><b>✦</b></div>
+  <div class="marquee-row" data-marquee="-1"><span class="o">EENS</span><b>—</b><span>Nado</span><b>—</b><span class="o">Lara</span><b>—</b><span>EENS ONE</span><b>—</b><span class="o">EENS</span><b>—</b><span>Nado</span><b>—</b><span class="o">Lara</span><b>—</b><span>EENS ONE</span><b>—</b></div>
 </div>
 
 <section class="section" id="musik" aria-labelledby="musik-title">
   <div class="section-head reveal">
     <p class="index">01 / Jetzt hören</p>
-    <h2 id="musik-title">Drück auf Play.<br><em>Der Rest passiert.</em></h2>
+    <h2 id="musik-title" data-split>Drück auf Play.<br><em class="chrome">Der Rest passiert.</em></h2>
     <p class="lead">Folge EENS und Nado auf Spotify. So landet jeder neue Release direkt in deinem Release Radar.</p>
   </div>
 
   <div class="listen">
-    <a class="cover reveal" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener" data-tilt data-track="spotify-cover">
-      <img src="/media/cover-ein-platz-bleibt-frei.webp" width="900" height="900" loading="lazy" decoding="async" alt="Cover: Ein Platz bleibt frei – EENS">
-      <span class="cover-sheen" aria-hidden="true"></span>
-      <span class="cover-label"><small>EENS · Aus dem Katalog</small><span>Ein Platz bleibt frei <b aria-hidden="true">↗</b></span></span>
-    </a>
+    <div class="cover-stage reveal">
+      <img class="cover-aura" src="/media/cover-ein-platz-bleibt-frei.webp" width="900" height="900" alt="" loading="lazy" decoding="async">
+      <div class="vinyl" aria-hidden="true"></div>
+      <a class="cover" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener" data-tilt>
+        <img src="/media/cover-ein-platz-bleibt-frei.webp" width="900" height="900" loading="lazy" decoding="async" alt="Cover: Ein Platz bleibt frei – EENS">
+        <span class="holo" aria-hidden="true"></span>
+        <span class="cover-label"><small>EENS · Aus dem Katalog</small><span>Ein Platz bleibt frei <b aria-hidden="true">↗</b></span></span>
+      </a>
+    </div>
 
     <div class="player reveal">
       <div class="player-tabs" role="tablist" aria-label="Artist wählen">
@@ -108,11 +111,12 @@
       </div>
       <div class="player-box" id="player-box">
         <div class="player-gate">
+          <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
           <p class="player-gate-title" id="player-title">EENS auf Spotify</p>
           <p class="player-gate-note">Der eingebettete Player wird erst nach deinem Klick geladen. Dabei werden Daten an Spotify übertragen. <a href="/datenschutz.html">Datenschutz</a></p>
           <div class="player-gate-actions">
             <button class="btn btn-silver" type="button" id="player-load">Player laden</button>
-            <a class="btn btn-ghost" id="player-direct" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener" data-track="spotify-direct">Direkt in Spotify <span aria-hidden="true">↗</span></a>
+            <a class="btn btn-ghost" id="player-direct" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener">Direkt in Spotify <span aria-hidden="true">↗</span></a>
           </div>
         </div>
       </div>
@@ -121,48 +125,91 @@
   </div>
 </section>
 
-<section class="band" aria-labelledby="band-title">
-  <div class="band-grid">
-    <figure class="band-film reveal" data-parallax="-0.06">
-      <img src="/media/band-poster.webp" width="540" height="780" loading="lazy" decoding="async" alt="Nado bei Nacht mit maskierter Begleitung – Szene aus dem Musikvideo Trade It All">
-      <div class="band-video-slot" data-video-slot data-lazy
-           data-webm="/media/band-tradeitall.webm" data-mp4="/media/band-tradeitall.mp4"></div>
-      <figcaption>Aus dem Musikvideo · Trade It All</figcaption>
-    </figure>
-    <div class="band-copy reveal">
-      <p class="index">02 / Visuals</p>
-      <h2 id="band-title">Musik, die bleibt.<br><em>Bilder, die treffen.</em></h2>
-      <p class="lead">EENS &amp; Nado – <strong>Trade It All</strong>. Von der ersten Zeile bis zum letzten Bild: Musik und Visuals aus dem EENS-ONE-Universum.</p>
-      <div class="link-row">
-        <a class="btn btn-silver" href="https://open.spotify.com/artist/6rwqTrNLO4Mo8DHc6JGeNd" target="_blank" rel="noopener" data-track="spotify-nado">Nado auf Spotify <span aria-hidden="true">↗</span></a>
-        <a class="btn btn-ghost" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener" data-track="spotify-eens">EENS auf Spotify <span aria-hidden="true">↗</span></a>
-      </div>
+<section class="reel" id="visuals" aria-labelledby="reel-title">
+  <div class="reel-sticky">
+    <div class="reel-head">
+      <p class="index">02 / Frame by Frame</p>
+      <h2 id="reel-title">Bilder,<br><em class="chrome">die treffen.</em></h2>
+      <p class="lead">Szenen aus den Visuals von EENS, Nado und Lara.</p>
+    </div>
+    <div class="reel-track" id="reel-track">
+      <figure class="clip g-ice" data-tilt>
+        <img src="/media/reel-familia.webp" width="480" height="720" loading="lazy" decoding="async" alt="EENS-Flagge über der Yacht, Crew im Gegenlicht">
+        <div data-video-slot data-lazy data-webm="/media/reel-familia.webm" data-mp4="/media/reel-familia.mp4"></div>
+        <figcaption><small>EENS</small>La Familia</figcaption>
+      </figure>
+      <figure class="clip g-crimson" data-tilt>
+        <img src="/media/reel-club.webp" width="480" height="720" loading="lazy" decoding="async" alt="Nado am Mikrofon im Club, rotes und gelbes Licht">
+        <div data-video-slot data-lazy data-webm="/media/reel-club.webm" data-mp4="/media/reel-club.mp4"></div>
+        <figcaption><small>Nado</small>All In</figcaption>
+      </figure>
+      <figure class="clip g-violet" data-tilt>
+        <img src="/media/reel-lara.webp" width="480" height="720" loading="lazy" decoding="async" alt="Lara vor der Skyline bei Nacht und am Flügel unter Kronleuchtern">
+        <div data-video-slot data-lazy data-webm="/media/reel-lara.webm" data-mp4="/media/reel-lara.mp4"></div>
+        <figcaption><small>Lara</small>Immer Leiser</figcaption>
+      </figure>
+      <figure class="clip g-ice" data-tilt>
+        <img src="/media/reel-trade.webp" width="480" height="720" loading="lazy" decoding="async" alt="Regen auf schwarzem Lack, dann Nado bei Nacht">
+        <div data-video-slot data-lazy data-webm="/media/reel-trade.webm" data-mp4="/media/reel-trade.mp4"></div>
+        <figcaption><small>EENS &amp; Nado</small>Trade It All</figcaption>
+      </figure>
+      <figure class="clip g-crimson" data-tilt>
+        <img src="/media/reel-skyline.webp" width="480" height="720" loading="lazy" decoding="async" alt="Nado vor der Skyline bei Nacht">
+        <div data-video-slot data-lazy data-webm="/media/reel-skyline.webm" data-mp4="/media/reel-skyline.mp4"></div>
+        <figcaption><small>Nado</small>Skyline bei Nacht</figcaption>
+      </figure>
+      <figure class="clip g-violet" data-tilt>
+        <img src="/media/reel-villa.webp" width="480" height="720" loading="lazy" decoding="async" alt="Nado mit maskierter Begleitung vor einer Villa bei Nacht">
+        <div data-video-slot data-lazy data-webm="/media/reel-villa.webm" data-mp4="/media/reel-villa.mp4"></div>
+        <figcaption><small>EENS ONE</small>Villa bei Nacht</figcaption>
+      </figure>
+      <figure class="clip g-ice" data-tilt>
+        <img src="/media/reel-mask.webp" width="480" height="720" loading="lazy" decoding="async" alt="Maskiertes Gesicht in Zeitlupe">
+        <div data-video-slot data-lazy data-webm="/media/reel-mask.webm" data-mp4="/media/reel-mask.mp4"></div>
+        <figcaption><small>EENS ONE</small>Hinter der Maske</figcaption>
+      </figure>
     </div>
   </div>
+</section>
+
+<section class="statement" aria-label="Über EENS ONE">
+  <p class="fill-text" data-fill>EENS. Nado. Lara. Drei Identitäten, ein Haus. Wer die Fäden hält, bleibt im Schatten. Zwischen Glanz und Dunkelheit.</p>
 </section>
 
 <section class="section" id="artists" aria-labelledby="artists-title">
   <div class="section-head reveal">
     <p class="index">03 / Die Identitäten</p>
-    <h2 id="artists-title">Drei Identitäten.<br><em>Eine Handschrift.</em></h2>
+    <h2 id="artists-title" data-split>Drei Identitäten.<br><em class="chrome">Eine Handschrift.</em></h2>
   </div>
   <div class="artists">
-    <a class="artist reveal" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener" data-tilt data-track="spotify-artist-eens">
-      <div class="artist-img"><img src="/media/artist-eens.webp" width="720" height="900" loading="lazy" decoding="async" alt="EENS: maskiertes Duo"><span class="cover-sheen" aria-hidden="true"></span></div>
+    <a class="artist g-ice reveal" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener" data-tilt>
+      <div class="artist-img">
+        <img src="/media/artist-eens.webp" width="720" height="900" loading="lazy" decoding="async" alt="EENS: maskiertes Duo">
+        <div data-video-slot data-lazy data-hover data-webm="/media/reel-familia.webm" data-mp4="/media/reel-familia.mp4"></div>
+        <span class="holo" aria-hidden="true"></span>
+      </div>
       <p class="artist-role">01 · The Signature</p>
       <h3>EENS</h3>
       <p>Zwei Stimmen. Eine dunkle Signatur. Das maskierte Duo verbindet Rap, Melodie und kontrollierte Eleganz. Das Zentrum von EENS ONE.</p>
       <span class="artist-cta">EENS hören <b aria-hidden="true">↗</b></span>
     </a>
-    <a class="artist reveal" href="https://open.spotify.com/artist/6rwqTrNLO4Mo8DHc6JGeNd" target="_blank" rel="noopener" data-tilt data-track="spotify-artist-nado">
-      <div class="artist-img"><img src="/media/artist-nado.webp" width="720" height="1279" loading="lazy" decoding="async" alt="Nado: fiktive Rap-Identität"><span class="cover-sheen" aria-hidden="true"></span></div>
+    <a class="artist g-crimson reveal" href="https://open.spotify.com/artist/6rwqTrNLO4Mo8DHc6JGeNd" target="_blank" rel="noopener" data-tilt>
+      <div class="artist-img">
+        <img src="/media/artist-nado.webp" width="720" height="1279" loading="lazy" decoding="async" alt="Nado: fiktive Rap-Identität">
+        <div data-video-slot data-lazy data-hover data-webm="/media/reel-club.webm" data-mp4="/media/reel-club.mp4"></div>
+        <span class="holo" aria-hidden="true"></span>
+      </div>
       <p class="artist-role">02 · The Disruption</p>
       <h3>Nado</h3>
       <p>Direkt. Trocken. Mit einem Grinsen im falschen Moment. Nado bringt den Druck und seinen ganz eigenen Ton.</p>
       <span class="artist-cta">Nado hören <b aria-hidden="true">↗</b></span>
     </a>
-    <a class="artist reveal" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener" data-tilt data-track="spotify-artist-lara">
-      <div class="artist-img"><img src="/media/artist-lara.webp" width="720" height="900" loading="lazy" decoding="async" alt="Lara: fiktive Figur im EENS-ONE-Universum"><span class="cover-sheen" aria-hidden="true"></span></div>
+    <a class="artist g-violet reveal" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener" data-tilt>
+      <div class="artist-img">
+        <img src="/media/artist-lara.webp" width="720" height="900" loading="lazy" decoding="async" alt="Lara: fiktive Figur im EENS-ONE-Universum">
+        <div data-video-slot data-lazy data-hover data-webm="/media/reel-lara.webm" data-mp4="/media/reel-lara.mp4"></div>
+        <span class="holo" aria-hidden="true"></span>
+      </div>
       <p class="artist-role">03 · The Quiet Force</p>
       <h3>Lara</h3>
       <p>Nicht jede Stimme macht Lärm. Manche bleiben im Kopf. Piano, Nähe und leise Intensität. Lara gehört zu EENS ONE.</p>
@@ -173,40 +220,48 @@
 
 <section class="shop" id="shop" aria-labelledby="shop-title">
   <div class="shop-grid">
-    <div class="shop-visual reveal" data-parallax="-0.05">
-      <img src="/media/shop-hoodie.webp" width="512" height="804" loading="lazy" decoding="async" alt="Rückenansicht: schwarzer Hoodie mit Aufdruck „EENS La Familia“ – Szene aus dem Visual">
+    <div class="shop-visual reveal">
+      <div class="shop-frame">
+        <img src="/media/reel-hoodie.webp" width="480" height="720" loading="lazy" decoding="async" alt="Schwarzer Hoodie mit Aufdruck „EENS La Familia“ – Szene aus dem Visual">
+        <div data-video-slot data-lazy data-webm="/media/reel-hoodie.webm" data-mp4="/media/reel-hoodie.mp4"></div>
+      </div>
+      <span class="shop-badge" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="circ" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><text><textPath href="#circ">EENS ONE · COLLECTION · EENS ONE · COLLECTION ·</textPath></text></svg></span>
     </div>
     <div class="shop-copy reveal">
       <p class="index">04 / EENS ONE Shop</p>
-      <h2 id="shop-title">Trag deine<br><em>Handschrift.</em></h2>
+      <h2 id="shop-title" data-split>Trag deine<br><em class="chrome">Handschrift.</em></h2>
       <p class="lead">Schwarz. Reduziert. Unverkennbar. Die EENS ONE Collection gibt es im offiziellen Shop.</p>
       <ul class="shop-items">
         <li><span>E / 01</span>Signature Hoodie<small>Die Handschrift zum Tragen.</small></li>
         <li><span>E / 02</span>Signature Cap<small>Ein Detail. Eine Identität.</small></li>
         <li><span>E / 03</span>Signature Bandana<small>Teil des Codes.</small></li>
       </ul>
-      <a class="btn btn-silver btn-lg" href="__SHOP__" target="_blank" rel="noopener" data-track="shop-section">Zum Shop <span aria-hidden="true">↗</span></a>
+      <a class="btn btn-silver btn-lg magnetic" href="__SHOP__" target="_blank" rel="noopener">Zum Shop <span aria-hidden="true">↗</span></a>
       <p class="fine">Der Shop wird über Fourthwall betrieben und öffnet sich in einem neuen Tab.</p>
     </div>
   </div>
 </section>
 
 <section class="world" aria-labelledby="world-title">
-  <div class="world-img" data-parallax="0.12">
-    <img src="/media/inner.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Die dunkle Bildwelt von EENS ONE">
+  <div class="world-media" data-parallax="0.12">
+    <img src="/media/reel-villa.webp" width="480" height="720" loading="lazy" decoding="async" alt="">
+    <div data-video-slot data-lazy data-webm="/media/reel-villa.webm" data-mp4="/media/reel-villa.mp4"></div>
   </div>
   <div class="world-copy reveal">
     <p class="index">05 / Inside the House</p>
-    <h2 id="world-title">Ein Moment.<br><em>Der bleibt.</em></h2>
+    <h2 id="world-title" data-split>Ein Moment.<br><em class="chrome">Der bleibt.</em></h2>
     <p class="lead">Neue Musik. Neue Bilder. Direkt aus unserer Welt.</p>
-    <a class="btn btn-ghost" href="https://www.instagram.com/eens_official/" target="_blank" rel="noopener" data-track="instagram">EENS auf Instagram <span aria-hidden="true">↗</span></a>
+    <div class="link-row">
+      <a class="btn btn-ghost magnetic" href="https://www.instagram.com/eens_official/" target="_blank" rel="noopener">Instagram <span aria-hidden="true">↗</span></a>
+      <a class="btn btn-ghost magnetic" href="https://www.tiktok.com/@eens.official" target="_blank" rel="noopener">TikTok <span aria-hidden="true">↗</span></a>
+    </div>
   </div>
 </section>
 
 <section class="section faq" aria-labelledby="faq-title">
   <div class="section-head reveal">
     <p class="index">06 / Gut zu wissen</p>
-    <h2 id="faq-title">Direkt.<br><em>Beantwortet.</em></h2>
+    <h2 id="faq-title">Direkt.<br><em class="chrome">Beantwortet.</em></h2>
   </div>
   <div class="faq-list reveal">
     <details><summary>Wo höre ich die Musik von EENS und Nado?</summary><p>Über die offiziellen Spotify-Profile von <a href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener">EENS</a> und <a href="https://open.spotify.com/artist/6rwqTrNLO4Mo8DHc6JGeNd" target="_blank" rel="noopener">Nado</a>. Lara verlinkt ebenfalls auf das offizielle Spotify-Profil von EENS.</p></details>
@@ -219,7 +274,7 @@
 <section class="about" aria-labelledby="about-title">
   <div class="reveal">
     <p class="index">Das Label / EENS ONE</p>
-    <h2 id="about-title">Deutschrap.<br><em>Eine eigene Welt.</em></h2>
+    <h2 id="about-title">Deutschrap.<br><em class="chrome">Eine eigene Welt.</em></h2>
   </div>
   <p class="reveal"><strong>EENS ONE</strong> ist ein unabhängiges Musiklabel und kreatives Musikprojekt. Hier treffen Deutschrap, Rap und Melodie auf cineastische Bildwelten. Entdecke die Musik von EENS und Nado auf Spotify, lerne Lara kennen und hol dir die EENS ONE Collection. EENS ist ein maskiertes Duo. Nado und Lara sind fiktive Figuren mit eigener musikalischer und visueller Identität.</p>
 </section>
@@ -227,6 +282,7 @@
 </main>
 
 <footer class="footer">
+  <div class="footer-big" aria-hidden="true">EENS ONE</div>
   <a class="footer-logo" href="#top"><img src="/media/logo-480.webp" width="480" height="286" loading="lazy" alt="EENS – silbernes Logo"></a>
   <nav class="footer-links" aria-label="Rechtliches und Kontakt">
     <a href="/impressum.html">Impressum</a>
@@ -241,10 +297,10 @@
 </footer>
 
 <nav class="dock" aria-label="Schnellzugriff">
-  <a class="dock-btn dock-spotify" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener" data-track="spotify-dock">
+  <a class="dock-btn dock-spotify" href="https://open.spotify.com/artist/3g49F3UXe5yHol0EzOYQRy" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-spotify"/></svg>Spotify
   </a>
-  <a class="dock-btn dock-shop" href="__SHOP__" target="_blank" rel="noopener" data-track="shop-dock">Shop <span aria-hidden="true">↗</span></a>
+  <a class="dock-btn dock-shop" href="__SHOP__" target="_blank" rel="noopener">Shop <span aria-hidden="true">↗</span></a>
 </nav>
 
 <dialog id="transparenz" aria-labelledby="transparenz-title">
