@@ -10,9 +10,13 @@ Video-Band (Trade It All), Scroll-Reveals, sanfte Parallax, Hover auf Covern. Ke
 - `scripts/build-media.sh <quellordner>` – rendert Videos (WebM + MP4, stumm, Loop) und Poster/Bilder nach `dist/media`.
 - `scripts/build-site.sh` – setzt Version und Shop-URL ein → `dist/site`.
 
-## Vorschau
-Worker `eens-relaunch-preview` → https://eens-relaunch-preview.nader-pahlavikhah.workers.dev (noindex).
-Live (`eens-next` auf eensmusic.com) ist unverändert.
+## Betrieb
+- **Live:** Worker `eens-relaunch` auf eensmusic.com (seit 18.11.2026).
+- **Vorschau:** Worker `eens-relaunch-preview` → https://eens-relaunch-preview.nader-pahlavikhah.workers.dev (noindex).
+  Achtung: Vorschau und Live lesen denselben KV-Namespace (`eens-next-video-assets`).
+- **Rückfall:** In Cloudflare unter Workers → Domains `eensmusic.com` wieder auf `eens-next` stellen. `eens-next` ist unverändert.
+- **Upload:** Der Upload-Endpunkt ist nur aktiv, wenn der Worker ein Secret `UPLOAD_TOKEN` hat (derzeit entfernt).
+- CSS/JS liegen versioniert unter `/assets/site.<version>.css|js` (unveränderlich gecacht).
 
 ## Regeln (nicht kaputt machen)
 - Videos nur Desktop, nie bei `prefers-reduced-motion` oder Datensparmodus; Mobil zeigt das Poster.

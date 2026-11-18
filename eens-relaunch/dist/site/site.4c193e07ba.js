@@ -48,13 +48,25 @@
   /* ---------- Videos ---------- */
   // Hero: nur Desktop. Übrige Clips: auch mobil, aber erst in Sichtweite. Nie bei reduzierter Bewegung / Datensparmodus.
   var videoOK = !reduced && !saveData;
+  // Höchstens 3 Videos gleichzeitig: es laufen die am stärksten sichtbaren, der Rest pausiert.
+  var MAX_PLAYING = 3, ratios = new Map();
+  function schedule() {
+    var list = [];
+    ratios.forEach(function (r, slot) { if (r > 0.35 && slot._v && !slot.hasAttribute("data-hover-only")) list.push([r, slot]); });
+    list.sort(function (a, b) { return b[0] - a[0]; });
+    var keep = new Set(list.slice(0, MAX_PLAYING).map(function (x) { return x[1]; }));
+    ratios.forEach(function (r, slot) {
+      if (!slot._v || slot.hasAttribute("data-hover-only")) return;
+      if (keep.has(slot)) { if (slot._v.paused) safePlay(slot._v); } else if (!slot._v.paused) slot._v.pause();
+    });
+  }
   var visIO = "IntersectionObserver" in window ? new IntersectionObserver(function (es) {
     es.forEach(function (e) {
-      var v = e.target._v; if (!v) return;
-      e.target._vis = e.isIntersecting;
-      if (e.isIntersecting && !e.target.hasAttribute("data-hover-only")) safePlay(v); else if (!e.isIntersecting) v.pause();
+      ratios.set(e.target, e.isIntersecting ? e.intersectionRatio : 0);
+      if (!e.isIntersecting && e.target._v) e.target._v.pause();
     });
-  }, { threshold: 0.15 }) : null;
+    schedule();
+  }, { threshold: [0, 0.35, 0.6, 0.9] }) : null;
   function safePlay(v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
   function mountVideo(slot) {
     if (slot._v) return slot._v;
@@ -67,12 +79,12 @@
     });
     v.addEventListener("playing", function () { v.classList.add("is-playing"); }, { once: true });
     slot.appendChild(v); slot._v = v;
-    if (visIO) visIO.observe(slot);
+    if (visIO) { visIO.unobserve(slot); visIO.observe(slot); } else safePlay(v);
     return v;
   }
   function startVideos() {
     $$("[data-video-slot]").forEach(function (slot) {
-      if (slot.hasAttribute("data-hero")) { if (desktop) safePlay(mountVideo(slot)); return; }
+      if (slot.hasAttribute("data-hero")) { if (desktop) mountVideo(slot); return; }
       if (slot.hasAttribute("data-hover") && desktop && finePointer) {
         // Artist-Karten: Video läuft beim Hover
         slot.setAttribute("data-hover-only", "");
@@ -83,7 +95,7 @@
       }
       if (slot.hasAttribute("data-hover")) slot.classList.add("touch-on");
       var lio = new IntersectionObserver(function (es) {
-        if (es[0].isIntersecting) { safePlay(mountVideo(slot)); lio.disconnect(); }
+        if (es[0].isIntersecting) { mountVideo(slot); lio.disconnect(); }
       }, { rootMargin: "250px 250px" });
       lio.observe(slot);
     });
@@ -118,7 +130,7 @@
     var max = document.documentElement.scrollHeight - vh;
     doc.style.setProperty("--sp", max > 0 ? (y / max).toFixed(4) : 0);
     if (reduced) return;
-    if (hero) hero.style.setProperty("--hp", Math.min(1, Math.max(0, y / (vh * 0.9))).toFixed(3));
+    if (hero && y < vh * 1.1) hero.style.setProperty("--hp", Math.min(1, Math.max(0, y / (vh * 0.9))).toFixed(3));
     px.forEach(function (el) {
       var r = el.getBoundingClientRect();
       if (r.bottom < -200 || r.top > vh + 200) return;
@@ -141,20 +153,23 @@
   addEventListener("scroll", onScroll, { passive: true });
   frame();
 
-  // Marquee: läuft dauerhaft, Scroll-Tempo beschleunigt und dreht die Richtung
+  // Marquee: läuft nur, solange sichtbar; Scroll-Tempo beschleunigt und dreht die Richtung
   if (rows.length) {
-    var mio = { on: true };
-    if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { mio.on = es[0].isIntersecting; }).observe($(".marquee"));
-    (function loop() {
+    var mOn = false, mRaf = 0;
+    var loop = function () {
       var y = scrollY; vel = vel * 0.9 + (y - lastY) * 0.1; lastY = y;
-      if (mio.on) rows.forEach(function (row, i) {
-        var dir = parseFloat(row.dataset.marquee), w = row.scrollWidth / 2;
-        marqueeX[i] -= dir * (0.6 + Math.abs(vel) * 0.35) * (vel < -0.5 ? -1 : 1);
+      rows.forEach(function (row, i) {
+        var dir = parseFloat(row.dataset.marquee), w = row._w || (row._w = row.scrollWidth / 2);
+        marqueeX[i] -= dir * (0.6 + Math.min(12, Math.abs(vel)) * 0.35) * (vel < -0.5 ? -1 : 1);
         if (marqueeX[i] <= -w) marqueeX[i] += w; if (marqueeX[i] > 0) marqueeX[i] -= w;
         row.style.transform = "translate3d(" + marqueeX[i].toFixed(1) + "px,0,0)";
       });
-      requestAnimationFrame(loop);
-    })();
+      mRaf = mOn ? requestAnimationFrame(loop) : 0;
+    };
+    new IntersectionObserver(function (es) {
+      mOn = es[0].isIntersecting;
+      if (mOn && !mRaf) { lastY = scrollY; mRaf = requestAnimationFrame(loop); }
+    }).observe($(".marquee"));
   }
 
   /* ---------- Maus: Glow, Spotlight, Tilt + Holo, magnetische Buttons ---------- */
@@ -163,9 +178,16 @@
     var glow = $(".cursor-glow"), gx = innerWidth / 2, gy = innerHeight / 2, cx = gx, cy = gy;
     addEventListener("pointermove", function (e) {
       gx = e.clientX; gy = e.clientY;
-      if (hero && e.clientY < innerHeight) { hero.style.setProperty("--mx", e.clientX + "px"); hero.style.setProperty("--my", e.clientY + "px"); }
+
     }, { passive: true });
-    (function follow() { cx += (gx - cx) * 0.12; cy += (gy - cy) * 0.12; glow.style.transform = "translate3d(" + cx.toFixed(1) + "px," + cy.toFixed(1) + "px,0)"; requestAnimationFrame(follow); })();
+    var fRaf = 0;
+    var follow = function () {
+      cx += (gx - cx) * 0.14; cy += (gy - cy) * 0.14;
+      glow.style.transform = "translate3d(" + cx.toFixed(1) + "px," + cy.toFixed(1) + "px,0)";
+      if (hero && scrollY < innerHeight) { hero.style.setProperty("--mx", cx.toFixed(0) + "px"); hero.style.setProperty("--my", cy.toFixed(0) + "px"); }
+      fRaf = (Math.abs(gx - cx) + Math.abs(gy - cy) > 0.5) ? requestAnimationFrame(follow) : 0;
+    };
+    addEventListener("pointermove", function () { if (!fRaf) fRaf = requestAnimationFrame(follow); }, { passive: true });
 
     $$("[data-tilt]").forEach(function (el) {
       var t = el.classList.contains("artist") ? $(".artist-img", el) : el;

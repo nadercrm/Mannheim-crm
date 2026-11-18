@@ -89,8 +89,11 @@ export default {
         if (campaign) h.set("x-robots-tag", "noindex, follow");
         return new Response(req.method === "HEAD" ? null : out, { headers: h });
       }
-      if (p === "/assets/site.css" || p === "/assets/site.js") {
-        const r = await serveFile(req, env, "site/" + p.slice(8), "public, max-age=31536000, immutable");
+      const am = /^\/assets\/(site(?:\.[a-f0-9]{10})?\.(?:css|js))$/.exec(p);
+      if (am) {
+        // site.<version>.css/js ist unveränderlich; die unversionierte Datei nur kurz cachen
+        const versioned = am[1].split(".").length > 2;
+        const r = await serveFile(req, env, "site/" + am[1], versioned ? "public, max-age=31536000, immutable" : "public, max-age=300");
         if (r) return r;
       }
       if (p.startsWith("/media/") && /^[a-z0-9._-]+$/.test(p.slice(7))) {
