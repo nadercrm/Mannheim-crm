@@ -7,6 +7,8 @@
   var finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
   var conn = navigator.connection || {};
   var saveData = conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || "");
+  // Leichter Modus für Handys/Touch: keine scrollgekoppelten Effekte, nur ein Video gleichzeitig
+  var lite = !desktop || !finePointer;
   if (!reduced) doc.classList.add("js");
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
@@ -49,7 +51,7 @@
   // Hero: nur Desktop. Übrige Clips: auch mobil, aber erst in Sichtweite. Nie bei reduzierter Bewegung / Datensparmodus.
   var videoOK = !reduced && !saveData;
   // Höchstens 3 Videos gleichzeitig: es laufen die am stärksten sichtbaren, der Rest pausiert.
-  var MAX_PLAYING = 3, ratios = new Map();
+  var MAX_PLAYING = lite ? 1 : 3, ratios = new Map();
   function schedule() {
     var list = [];
     ratios.forEach(function (r, slot) { if (r > 0.35 && slot._v && !slot.hasAttribute("data-hover-only")) list.push([r, slot]); });
@@ -73,7 +75,7 @@
     var v = document.createElement("video");
     v.muted = true; v.defaultMuted = true; v.loop = true; v.playsInline = true;
     v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("aria-hidden", "true");
-    v.preload = "auto"; v.disablePictureInPicture = true;
+    v.preload = lite && !slot.hasAttribute("data-hero") ? "metadata" : "auto"; v.disablePictureInPicture = true;
     [["webm", "video/webm"], ["mp4", "video/mp4"]].forEach(function (s) {
       var src = document.createElement("source"); src.src = slot.dataset[s[0]]; src.type = s[1]; v.appendChild(src);
     });
@@ -96,7 +98,7 @@
       if (slot.hasAttribute("data-hover")) slot.classList.add("touch-on");
       var lio = new IntersectionObserver(function (es) {
         if (es[0].isIntersecting) { mountVideo(slot); lio.disconnect(); }
-      }, { rootMargin: "250px 250px" });
+      }, { rootMargin: lite ? "120px 120px" : "250px 250px" });
       lio.observe(slot);
     });
   }
@@ -106,10 +108,13 @@
   }
 
   /* ---------- Topbar, Fortschritt, Hero, Parallax, Fill, Reel, Marquee: ein rAF-Takt ---------- */
-  var bar = $("#topbar"), hero = $(".hero"), reel = $(".reel"), track = $("#reel-track");
-  var px = reduced ? [] : $$("[data-parallax]");
+  var bar = $("#topbar"), hero = $(".hero"), reel = $(".reel"), track = $("#reel-track"), prog = $(".progress");
+  var solid = null, docH = 0;
+  function measureDoc() { docH = document.documentElement.scrollHeight - innerHeight; }
+  measureDoc(); addEventListener("load", measureDoc); addEventListener("resize", measureDoc);
+  var px = (reduced || lite) ? [] : $$("[data-parallax]");
   var fills = reduced ? [] : $$(".fill-text .fw");
-  var rows = reduced ? [] : $$("[data-marquee]");
+  var rows = (reduced || lite) ? [] : $$("[data-marquee]");
   var marqueeX = rows.map(function () { return 0; });
   var lastY = scrollY, vel = 0, ticking = false;
 
@@ -126,11 +131,10 @@
   function frame() {
     ticking = false;
     var y = scrollY, vh = innerHeight;
-    bar.classList.toggle("is-solid", y > vh * 0.35);
-    var max = document.documentElement.scrollHeight - vh;
-    doc.style.setProperty("--sp", max > 0 ? (y / max).toFixed(4) : 0);
+    var s2 = y > vh * 0.35; if (s2 !== solid) { solid = s2; bar.classList.toggle("is-solid", s2); }
+    if (prog) prog.style.transform = "scaleX(" + (docH > 0 ? Math.min(1, y / docH) : 0).toFixed(4) + ")";
     if (reduced) return;
-    if (hero && y < vh * 1.1) hero.style.setProperty("--hp", Math.min(1, Math.max(0, y / (vh * 0.9))).toFixed(3));
+    if (hero && !lite && y < vh * 1.1) hero.style.setProperty("--hp", Math.min(1, Math.max(0, y / (vh * 0.9))).toFixed(3));
     px.forEach(function (el) {
       var r = el.getBoundingClientRect();
       if (r.bottom < -200 || r.top > vh + 200) return;
@@ -141,7 +145,7 @@
       var fr = fills[0].parentNode.getBoundingClientRect();
       var p = Math.min(1, Math.max(0, (vh * 0.85 - fr.top) / (fr.height + vh * 0.35)));
       var n = Math.round(p * fills.length);
-      fills.forEach(function (w, i) { w.classList.toggle("on", i < n); w.classList.toggle("hot", i < n && i >= n - 3); });
+      if (n !== fills._n) { fills._n = n; fills.forEach(function (w, i) { w.classList.toggle("on", i < n); w.classList.toggle("hot", i < n && i >= n - 3); }); }
     }
     if (reel && reel._dist) {
       var rr = reel.getBoundingClientRect();
