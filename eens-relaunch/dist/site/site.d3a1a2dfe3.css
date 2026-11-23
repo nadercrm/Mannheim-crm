@@ -321,15 +321,3 @@ dialog h2{font-size:clamp(30px,4vw,44px);margin-bottom:22px}
   .js .reveal{transform:translate3d(0,24px,0)}
 }
 @keyframes marq{to{transform:translate3d(-50%,0,0)}}
-
-@media (prefers-reduced-motion:reduce){
-  html:not(.motion-on) *,html:not(.motion-on) *::before,html:not(.motion-on) *::after{animation:none!important;transition:none!important}
-  html:not(.motion-on) .hero-media,html:not(.motion-on) .hero-inner,html:not(.motion-on) .world-media{transform:none!important}
-  html:not(.motion-on) .hero-inner{opacity:1!important}
-}
-/* Schalter „Bewegtbild einschalten“ (nur sichtbar, wenn das System „Bewegung reduzieren“ meldet) */
-.motion-toggle{display:inline-flex;align-items:center;gap:10px;margin-top:16px;height:40px;padding:0 18px;border-radius:999px;border:1px solid var(--line-strong);background:rgba(6,7,8,.6);color:var(--white);font:500 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
-.motion-toggle:hover{border-color:var(--silver)}
-.motion-toggle::before{content:"";width:0;height:0;border-left:8px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent}
-.motion-on .motion-toggle::before{width:8px;height:10px;border:0;border-left:3px solid currentColor;border-right:3px solid currentColor}
-.motion-toggle[hidden]{display:none}
