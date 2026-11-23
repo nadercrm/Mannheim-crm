@@ -2,7 +2,11 @@
 (function () {
   "use strict";
   var doc = document.documentElement;
-  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var sysReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var motionOn = false;
+  try { motionOn = localStorage.getItem("eens-motion") === "on"; } catch (e) {}
+  if (sysReduced && motionOn) doc.classList.add("motion-on");
+  var reduced = sysReduced && !motionOn;
   var desktop = matchMedia("(min-width: 900px)").matches;
   var finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
   var conn = navigator.connection || {};
@@ -252,6 +256,18 @@
       });
     });
     renderPlayer();
+  }
+
+  /* ---------- Schalter „Bewegtbild“ (nur bei „Bewegung reduzieren“ im System) ---------- */
+  var mt = $("#motion-toggle");
+  if (mt && sysReduced) {
+    mt.hidden = false;
+    mt.textContent = motionOn ? "Bewegtbild ausschalten" : "Bewegtbild einschalten";
+    mt.setAttribute("aria-pressed", String(motionOn));
+    mt.addEventListener("click", function () {
+      try { if (motionOn) localStorage.removeItem("eens-motion"); else localStorage.setItem("eens-motion", "on"); } catch (e) {}
+      location.reload();
+    });
   }
 
   /* ---------- KI-Transparenz-Dialog ---------- */
