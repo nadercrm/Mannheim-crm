@@ -94,7 +94,7 @@ main,footer{position:relative;z-index:1}
 .eyebrow{display:flex;align-items:center;gap:10px;font:500 10px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--silver);margin:0 0 14px}
 .live-dot{width:8px;height:8px;border-radius:50%;background:var(--c-crimson);box-shadow:0 0 0 0 rgba(255,42,85,.6);animation:pulse 2s infinite;flex:none}
 @keyframes pulse{70%{box-shadow:0 0 0 12px rgba(255,42,85,0)}100%{box-shadow:0 0 0 0 rgba(255,42,85,0)}}
-.hero-title{font-size:clamp(40px,7.6vw,118px);max-width:12ch;text-shadow:0 4px 40px rgba(0,0,0,.45)}
+.hero-title{font-size:clamp(40px,6.2vw,96px);max-width:16ch;text-shadow:0 4px 40px rgba(0,0,0,.45)}
 .hero-sub{max-width:38ch;margin:18px 0 0;color:var(--silver);font-size:clamp(16px,1.4vw,19px)}
 .hero-ctas{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:clamp(20px,3.4vh,36px);max-width:520px}
 .hero-ctas .btn{padding:0 8px;gap:7px;font-size:12px;letter-spacing:.04em}
